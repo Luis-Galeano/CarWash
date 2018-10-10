@@ -9,35 +9,26 @@ import javax.ejb.EJB;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import py.com.carwash.ejb.bean.ServiciosBean;
+import py.com.carwash.ejb.bean.VehiculosBean;
 import py.com.carwash.ejb.dto.GenericResponse;
 
 /**
  *
  * @author Luis Galeano
  */
-@Path("servicios")
-public class ServiciosResource {
+@Path("vehiculos")
+public class VehiculosResource {
     private final Logger logger = LogManager.getLogger(this.getClass());
     @EJB
-    ServiciosBean servicioBean;
+    VehiculosBean vehiculoBean;
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public GenericResponse getServicios(){
-        return servicioBean.getServicios();
-    }
-    
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("precio")
-    public GenericResponse getPrecioServicioPorVehiculo(@QueryParam("idServicio") long idServicio,
-            @QueryParam("idVehiculo") long idVehiculo){
-        return servicioBean.getPrecioServicioPorVehiculo(idServicio,idVehiculo);
+        return vehiculoBean.getVehiculos();
     }
     
 }

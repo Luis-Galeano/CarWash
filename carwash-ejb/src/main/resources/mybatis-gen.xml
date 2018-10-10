@@ -34,18 +34,11 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
         
-       <table tableName="reservas">
-            <generatedKey column="id_reserva" sqlStatement="JDBC"/>  
-       </table>
-       <table tableName="servicios">
-            <generatedKey column="id_servicio" sqlStatement="JDBC"/>  
-       </table>
-       <table tableName="vehiculo">
+       
+       <table tableName="vehiculos">
             <generatedKey column="id_vehiculo" sqlStatement="JDBC"/>  
        </table>
-       <table tableName="servicios_vehiculos">
-            <generatedKey column="id_servicio_vehiculo" sqlStatement="JDBC"/>  
-       </table>
+       
        
     </context>
 </generatorConfiguration>

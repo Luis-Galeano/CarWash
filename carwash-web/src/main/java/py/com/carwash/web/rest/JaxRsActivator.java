@@ -23,6 +23,7 @@ public class JaxRsActivator extends Application {
     }
     
     private void addRestResourceClasses(Set<Class<?>> resources) {
-         resources.add(py.com.carwash.web.rest.ServiciosResource.class);
+        resources.add(py.com.carwash.web.rest.ServiciosResource.class);
+        resources.add(py.com.carwash.web.rest.VehiculosResource.class);
     }  
 }
