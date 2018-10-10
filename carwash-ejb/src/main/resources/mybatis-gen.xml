@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!-- Ubicación del JAR JDBC del gestor de Base de datos a usar, en este caso Postgresql  -->
+    <classPathEntry location="carwash-ejb/src/main/resources/postgresql-9.3-1103.jdbc4.jar" />
+    <!--  Generaremos para MyBatis versión 3 -->
+    <context id="DB1" targetRuntime="MyBatis3">
+        
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"/>
+        <plugin type="py.com.konecta.mybatis.gen.extender.GenericDAOPlugin"/>
+        <!-- No generamos los comentarios -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+        
+        <!--  Parámetros de conexión a la bd -->
+        <jdbcConnection driverClass="org.postgresql.Driver" 
+                        connectionURL="jdbc:postgresql://104.248.177.248:5432/carwash"
+                        userId="postgres" 
+                        password="Cambiar.2018">
+        </jdbcConnection>
+        
+        <!--Aqui salida es una carpeta, es la carpeta donde el generator pondra los .java-->
+        <javaModelGenerator targetPackage="py.com.carwash.ejb.model" targetProject="carwash-ejb/src/main/java">
+            <property name="enableSubPackages" value="true" />
+        </javaModelGenerator>
+        
+        <!-- También podríamos indicar el tipo ANNOTATEDMAPPER -->
+        <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="py.com.carwash.ejb.mapper" targetProject="carwash-ejb/src/main/java">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+        
+       <table tableName="reservas">
+            <generatedKey column="id_reserva" sqlStatement="JDBC"/>  
+       </table>
+       <table tableName="servicios">
+            <generatedKey column="id_servicio" sqlStatement="JDBC"/>  
+       </table>
+       <table tableName="vehiculo">
+            <generatedKey column="id_vehiculo" sqlStatement="JDBC"/>  
+       </table>
+       <table tableName="servicios_vehiculos">
+            <generatedKey column="id_servicio_vehiculo" sqlStatement="JDBC"/>  
+       </table>
+       
+    </context>
+</generatorConfiguration>

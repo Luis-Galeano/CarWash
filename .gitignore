@@ -1,0 +1,6 @@
+/carwash-ejb/target/
+/carwash-ear/target/
+/carwash-web/target/
+/carwash-ejb/nb-configuration.xml
+/carwash-ear/nb-configuration.xml
+/carwash-web/nb-configuration.xml
