@@ -34,4 +34,7 @@ public class Constantes {
     public static final String  EXITO_EMAIL= "Se ha enviado un correo electronico para restablecer su contraseña";
     
     public static final String CI_YA_REGISTRADO_EN_KEYCLOAK= "El usuario ya existe";
+    public static final String PASS= "email-password";
+    public static final String FROM_ADDRESS= "from-email";
+    public static final String TO_ADDRESS= "to-email";
 }

@@ -6,6 +6,7 @@
 package py.com.carwash.ejb.bean;
 
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import org.apache.logging.log4j.LogManager;
@@ -14,6 +15,7 @@ import static py.com.carwash.ejb.Constantes.ESTADO_ERROR;
 import static py.com.carwash.ejb.Constantes.ESTADO_EXITO;
 import static py.com.carwash.ejb.Constantes.MENSAJE_ERROR;
 import static py.com.carwash.ejb.Constantes.MENSAJE_EXITO;
+import py.com.carwash.ejb.Util.EmailBean;
 import py.com.carwash.ejb.dao.ServiciosDAO;
 import py.com.carwash.ejb.dao.ServiciosVehiculosDAO;
 import py.com.carwash.ejb.dto.GenericResponse;
@@ -32,6 +34,8 @@ public class ServiciosBean {
     ServiciosDAO servicioDao;
     @Inject
     ServiciosVehiculosDAO serVehicDao;
+    @EJB
+    EmailBean emailBean;
     
     private final Logger logger = LogManager.getLogger(this.getClass());
     
