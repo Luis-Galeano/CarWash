@@ -23,5 +23,14 @@ public class QuerySqlProvider {
         return sql;
     }
     
+    public String getVehiculoServicio(){
+        
+        String sql = "select (select descripcion from servicios\n" +
+                     "where id_Servicio=#{idServicio}) as servicio,\n" +
+                     "(select nombre from vehiculos\n" +
+                     "where id_vehiculo = #{idVehiculo}) as vehiculo";            
+        return sql;
+    }
+    
     
 }

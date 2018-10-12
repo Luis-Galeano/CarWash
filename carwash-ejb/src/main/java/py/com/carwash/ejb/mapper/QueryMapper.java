@@ -6,6 +6,7 @@
 package py.com.carwash.ejb.mapper;
 
 
+import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.SelectProvider;
 
@@ -20,5 +21,7 @@ public interface QueryMapper {
     @SelectProvider(type=QuerySqlProvider.class, method="getConfigValue")
     public String getConfigValue(@Param("param") String param);
     
+    @SelectProvider(type=QuerySqlProvider.class, method="getVehiculoServicio")
+    public Map<String,Object> getVehiculoServicio(@Param("idServicio") Integer idServicio, @Param("idVehiculo") Integer idVehiculo);
     
 }

@@ -7,6 +7,7 @@ package py.com.carwash.ejb.bean;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -52,10 +53,12 @@ public class ReservasBean {
             if (reserva != null){
                 logger.info("[INICIANDO REGISTRO DE RESERVA]");
                 reserva.setEstadoReserva(1); // estado pendiente
+                reservaDao.insertSelective(reserva); //se registra la reserva
+                
                 ServiciosVehiculosExample svExample = new ServiciosVehiculosExample();
                 svExample.createCriteria().andIdServicioVehiculoEqualTo(reserva.getIdServicioVehiculo().intValue());
                 ServiciosVehiculos serVehiculo = svDao.selectOneByExample(svExample);
-                reservaDao.insertSelective(reserva); //se registra la reserva
+                Map<String,Object> data = queryDao.getVehiculoServicio(serVehiculo.getIdServicio().intValue(), serVehiculo.getIdVehiculo().intValue());
                 
                 // preparar datos para enviar correo al cliente
                 String asunto = "Reserva Carwash";
@@ -66,15 +69,19 @@ public class ReservasBean {
                 //preparar datos para enviar correo al admin
                 asunto = "Pedido de Reserva";
                 mensaje = "El cliente <b>"+reserva.getNombreSolicitante()+"</b> ha solicitado lo siguiente:<br><br>"+
-                        "<b>Tipo vehiculo: </b>"+serVehiculo.getIdVehiculo()+"<br>"+
-                        "<b>Tipo Servicio: </b>"+serVehiculo.getIdServicio()+"<br>"+
+                        "<b>Tipo vehiculo: </b>"+data.get("vehiculo")+"<br>"+
+                        "<b>Tipo Servicio: </b>"+data.get("servicio")+"<br>"+
                         "<b>Dia: </b>"+df.format(reserva.getFechaHora())+"<br><br>"+
                         "El precio estimado del trabjo es: <b>"+serVehiculo.getPrecio()+"</b>";
                         
                 to = queryDao.getConfigValue(TO_ADDRESS);
                 emailBean.sendEmail(fromAddress, to, asunto, mensaje);
+                resp.setEstado(ESTADO_EXITO);
+                resp.setMensaje(MENSAJE_EXITO);
             }
         } catch (Exception e) {
+            resp.setEstado(ESTADO_ERROR);
+            resp.setMensaje(MENSAJE_ERROR);
             logger.error("",e);
         }
         logger.info("OUT: {}",resp);

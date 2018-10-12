@@ -5,6 +5,7 @@
  */
 package py.com.carwash.ejb.dao;
 
+import java.util.Map;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import org.apache.logging.log4j.LogManager;
@@ -36,5 +37,8 @@ public class QueryDAO {
         logger.info("OUT: {}",resp);
         return resp;
     }
- 
+         
+   public Map<String,Object> getVehiculoServicio(Integer idServicio, Integer idVehiculo){
+       return mapper.getVehiculoServicio(idServicio, idVehiculo);
+   }
 }
