@@ -55,15 +55,15 @@ public class ServiciosBean {
         return resp;
     }
     
-    public GenericResponse getPrecioServicioPorVehiculo(long idServicio, long idVehiculo){
-        logger.info("{}, {}",idServicio,idVehiculo);
+    public GenericResponse getPrecioServicioPorVehiculo(long idServicio, long idVehiculo, int cantidad){
+        logger.info("{}, {}, {}",idServicio,idVehiculo,cantidad);
         GenericResponse resp = new GenericResponse();
         try {
             ServiciosVehiculosExample svexample = new ServiciosVehiculosExample();
             svexample.createCriteria().andIdServicioEqualTo(idServicio)
                     .andIdVehiculoEqualTo(idVehiculo);
             ServiciosVehiculos servicioVehiculo = serVehicDao.selectOneByExample(svexample);
-            resp.setDato(servicioVehiculo.getPrecio());
+            resp.setDato(servicioVehiculo.getPrecio()*cantidad);
             resp.setMensaje(MENSAJE_EXITO);
             resp.setEstado(ESTADO_EXITO);
         } catch (Exception e) {

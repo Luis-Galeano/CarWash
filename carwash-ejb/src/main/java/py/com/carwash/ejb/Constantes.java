@@ -37,4 +37,7 @@ public class Constantes {
     public static final String PASS= "email-password";
     public static final String FROM_ADDRESS= "from-email";
     public static final String TO_ADDRESS= "to-email";
+    
+    public static final String MAX_RESERVA_MANHANA= "max-reserva-manhana";
+    public static final String MAX_RESERVA_TARDE= "max-reserva-tarde";
 }

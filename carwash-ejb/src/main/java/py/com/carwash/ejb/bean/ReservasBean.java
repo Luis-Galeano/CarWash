@@ -5,26 +5,26 @@
  */
 package py.com.carwash.ejb.bean;
 
+import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import static py.com.carwash.ejb.Constantes.ESTADO_ERROR;
-import static py.com.carwash.ejb.Constantes.ESTADO_EXITO;
-import static py.com.carwash.ejb.Constantes.FROM_ADDRESS;
-import static py.com.carwash.ejb.Constantes.MENSAJE_ERROR;
-import static py.com.carwash.ejb.Constantes.MENSAJE_EXITO;
-import static py.com.carwash.ejb.Constantes.TO_ADDRESS;
+
+import static py.com.carwash.ejb.Constantes.*;
 import py.com.carwash.ejb.Util.EmailBean;
 import py.com.carwash.ejb.dao.QueryDAO;
 import py.com.carwash.ejb.dao.ReservasDAO;
 import py.com.carwash.ejb.dao.ServiciosVehiculosDAO;
 import py.com.carwash.ejb.dto.GenericResponse;
 import py.com.carwash.ejb.model.Reservas;
+import py.com.carwash.ejb.model.ReservasExample;
 import py.com.carwash.ejb.model.ServiciosVehiculos;
 import py.com.carwash.ejb.model.ServiciosVehiculosExample;
 
@@ -101,6 +101,65 @@ public class ReservasBean {
             logger.error("",e);
         }
         logger.info("OUT: {}",resp);
+        return resp;
+    }
+    
+    public GenericResponse eliminarReserva(Integer idReserva){
+    	logger.info("IN: {}",idReserva);
+        GenericResponse resp = new GenericResponse();
+        try {
+            reservaDao.deleteByPrimaryKey(idReserva);
+            resp.setEstado(ESTADO_EXITO);
+            resp.setMensaje(MENSAJE_EXITO);
+        } catch (Exception e) {
+            resp.setEstado(ESTADO_ERROR);
+            resp.setMensaje(MENSAJE_ERROR);
+            logger.error("",e);
+        }
+        logger.info("OUT: {}",resp);
+        return resp;
+    }
+    
+    public GenericResponse verificarDisponibilidad(String fechaReserva){
+    	logger.info("IN: {}",fechaReserva);
+    	GenericResponse resp = new GenericResponse();
+    	try {
+    		SimpleDateFormat df = new SimpleDateFormat("ddMMyyyy");
+    		Date reserva = df.parse(fechaReserva);
+    		ReservasExample rExample = new ReservasExample();
+    		rExample.createCriteria().andFechaHoraEqualTo(reserva);
+    		List<Reservas> reservasList = reservaDao.selectByExample(rExample);
+    		int maxReservaManhana = Integer.valueOf(queryDao.getConfigValue(MAX_RESERVA_MANHANA));
+    		int maxReservaTarde = Integer.valueOf(queryDao.getConfigValue(MAX_RESERVA_TARDE));
+    		int reservaManhana=0;
+    		int reservaTarde=0;
+    		String disponible="NO";
+    		for(Reservas r : reservasList){
+    			if (r.getUbicacion().equals("M")){
+    				reservaManhana = reservaManhana + r.getEstadoReserva();
+    			}
+    			else if (r.getUbicacion().equals("T")){
+    				reservaTarde = reservaTarde + r.getEstadoReserva();;
+    			}
+    		}
+    		if (reservaManhana < maxReservaManhana & reservaTarde < maxReservaTarde){
+    			disponible = "MT";
+    		}
+    		else if(reservaManhana < maxReservaManhana){
+    			disponible = "M";
+    		}
+    		else if(reservaTarde < maxReservaTarde){
+    			disponible = "T";
+    		}
+    		resp.setDato(disponible);
+    		resp.setEstado(ESTADO_EXITO);
+            resp.setMensaje(MENSAJE_EXITO);
+		} catch (Exception e) {
+			resp.setEstado(ESTADO_ERROR);
+            resp.setMensaje(MENSAJE_ERROR);
+			logger.error("",e);
+		}
+    	logger.info("OUT: {}",resp);
         return resp;
     }
 }

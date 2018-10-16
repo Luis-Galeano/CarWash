@@ -36,8 +36,8 @@ public class ServiciosResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("precio")
     public GenericResponse getPrecioServicioPorVehiculo(@QueryParam("idServicio") long idServicio,
-            @QueryParam("idVehiculo") long idVehiculo){
-        return servicioBean.getPrecioServicioPorVehiculo(idServicio,idVehiculo);
+            @QueryParam("idVehiculo") long idVehiculo,@QueryParam("cantidad") int cantidad){
+        return servicioBean.getPrecioServicioPorVehiculo(idServicio,idVehiculo,cantidad);
     }
     
 }

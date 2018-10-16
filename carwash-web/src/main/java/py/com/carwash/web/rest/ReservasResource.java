@@ -11,9 +11,12 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import py.com.carwash.ejb.bean.ReservasBean;
 import py.com.carwash.ejb.dto.GenericResponse;
 import py.com.carwash.ejb.model.Reservas;
@@ -43,4 +46,10 @@ public class ReservasResource {
         return reservaBean.getReservas();
     }
     
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("eliminar")
+    public GenericResponse eliminarReserva(@QueryParam("idReserva") Integer idReserva){
+        return reservaBean.eliminarReserva(idReserva);
+    }
 }
