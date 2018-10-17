@@ -63,7 +63,8 @@ public class ServiciosBean {
             svexample.createCriteria().andIdServicioEqualTo(idServicio)
                     .andIdVehiculoEqualTo(idVehiculo);
             ServiciosVehiculos servicioVehiculo = serVehicDao.selectOneByExample(svexample);
-            resp.setDato(servicioVehiculo.getPrecio()*cantidad);
+            servicioVehiculo.setPrecio(servicioVehiculo.getPrecio()*cantidad);
+            resp.setDato(servicioVehiculo);
             resp.setMensaje(MENSAJE_EXITO);
             resp.setEstado(ESTADO_EXITO);
         } catch (Exception e) {

@@ -35,10 +35,16 @@
         </javaClientGenerator>
         
        
-       <table tableName="vehiculos">
+<!--       <table tableName="vehiculos">
             <generatedKey column="id_vehiculo" sqlStatement="JDBC"/>  
-       </table>
+       </table>-->
        
+       <table tableName="reservas">
+            <generatedKey column="id_reserva" sqlStatement="JDBC"/>  
+       </table>
+       <table tableName="reservas_detalles">
+            <generatedKey column="id_reserva_detalle" sqlStatement="JDBC"/>  
+       </table>
        
     </context>
 </generatorConfiguration>

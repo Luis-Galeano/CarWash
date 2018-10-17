@@ -3,87 +3,62 @@ package py.com.carwash.ejb.mapper;
 import java.util.List;
 import java.util.Map;
 import org.apache.ibatis.jdbc.SQL;
-import py.com.carwash.ejb.model.Reservas;
-import py.com.carwash.ejb.model.ReservasExample.Criteria;
-import py.com.carwash.ejb.model.ReservasExample.Criterion;
-import py.com.carwash.ejb.model.ReservasExample;
+import py.com.carwash.ejb.model.ReservasDetalles;
+import py.com.carwash.ejb.model.ReservasDetallesExample.Criteria;
+import py.com.carwash.ejb.model.ReservasDetallesExample.Criterion;
+import py.com.carwash.ejb.model.ReservasDetallesExample;
 
-public class ReservasSqlProvider {
+public class ReservasDetallesSqlProvider {
 
-    public String countByExample(ReservasExample example) {
+    public String countByExample(ReservasDetallesExample example) {
         SQL sql = new SQL();
-        sql.SELECT("count(*)").FROM("reservas");
+        sql.SELECT("count(*)").FROM("reservas_detalles");
         applyWhere(sql, example, false);
         return sql.toString();
     }
 
-    public String deleteByExample(ReservasExample example) {
+    public String deleteByExample(ReservasDetallesExample example) {
         SQL sql = new SQL();
-        sql.DELETE_FROM("reservas");
+        sql.DELETE_FROM("reservas_detalles");
         applyWhere(sql, example, false);
         return sql.toString();
     }
 
-    public String insertSelective(Reservas record) {
+    public String insertSelective(ReservasDetalles record) {
         SQL sql = new SQL();
-        sql.INSERT_INTO("reservas");
+        sql.INSERT_INTO("reservas_detalles");
         
-        if (record.getFecha() != null) {
-            sql.VALUES("fecha", "#{fecha,jdbcType=DATE}");
-        }
-        
-        if (record.getUbicacion() != null) {
-            sql.VALUES("ubicacion", "#{ubicacion,jdbcType=VARCHAR}");
-        }
-        
-        if (record.getNombreSolicitante() != null) {
-            sql.VALUES("nombre_solicitante", "#{nombreSolicitante,jdbcType=VARCHAR}");
-        }
-        
-        if (record.getTelefonoSolicitante() != null) {
-            sql.VALUES("telefono_solicitante", "#{telefonoSolicitante,jdbcType=VARCHAR}");
-        }
-        
-        if (record.getEmailSolicitante() != null) {
-            sql.VALUES("email_solicitante", "#{emailSolicitante,jdbcType=VARCHAR}");
-        }
-        
-        if (record.getEstadoReserva() != null) {
-            sql.VALUES("estado_reserva", "#{estadoReserva,jdbcType=INTEGER}");
+        if (record.getIdServicioVehiculo() != null) {
+            sql.VALUES("id_servicio_vehiculo", "#{idServicioVehiculo,jdbcType=BIGINT}");
         }
         
         if (record.getCantidad() != null) {
             sql.VALUES("cantidad", "#{cantidad,jdbcType=INTEGER}");
         }
         
-        if (record.getTurno() != null) {
-            sql.VALUES("turno", "#{turno,jdbcType=VARCHAR}");
+        if (record.getPreccio() != null) {
+            sql.VALUES("preccio", "#{preccio,jdbcType=INTEGER}");
         }
         
-        if (record.getPrecio() != null) {
-            sql.VALUES("precio", "#{precio,jdbcType=INTEGER}");
+        if (record.getIdReserva() != null) {
+            sql.VALUES("id_reserva", "#{idReserva,jdbcType=BIGINT}");
         }
         
         return sql.toString();
     }
 
-    public String selectByExample(ReservasExample example) {
+    public String selectByExample(ReservasDetallesExample example) {
         SQL sql = new SQL();
         if (example != null && example.isDistinct()) {
-            sql.SELECT_DISTINCT("id_reserva");
+            sql.SELECT_DISTINCT("id_reserva_detalle");
         } else {
-            sql.SELECT("id_reserva");
+            sql.SELECT("id_reserva_detalle");
         }
-        sql.SELECT("fecha");
-        sql.SELECT("ubicacion");
-        sql.SELECT("nombre_solicitante");
-        sql.SELECT("telefono_solicitante");
-        sql.SELECT("email_solicitante");
-        sql.SELECT("estado_reserva");
+        sql.SELECT("id_servicio_vehiculo");
         sql.SELECT("cantidad");
-        sql.SELECT("turno");
-        sql.SELECT("precio");
-        sql.FROM("reservas");
+        sql.SELECT("preccio");
+        sql.SELECT("id_reserva");
+        sql.FROM("reservas_detalles");
         applyWhere(sql, example, false);
         
         if (example != null && example.getOrderByClause() != null) {
@@ -94,50 +69,30 @@ public class ReservasSqlProvider {
     }
 
     public String updateByExampleSelective(Map<String, Object> parameter) {
-        Reservas record = (Reservas) parameter.get("record");
-        ReservasExample example = (ReservasExample) parameter.get("example");
+        ReservasDetalles record = (ReservasDetalles) parameter.get("record");
+        ReservasDetallesExample example = (ReservasDetallesExample) parameter.get("example");
         
         SQL sql = new SQL();
-        sql.UPDATE("reservas");
+        sql.UPDATE("reservas_detalles");
         
-        if (record.getIdReserva() != null) {
-            sql.SET("id_reserva = #{record.idReserva,jdbcType=INTEGER}");
+        if (record.getIdReservaDetalle() != null) {
+            sql.SET("id_reserva_detalle = #{record.idReservaDetalle,jdbcType=INTEGER}");
         }
         
-        if (record.getFecha() != null) {
-            sql.SET("fecha = #{record.fecha,jdbcType=DATE}");
-        }
-        
-        if (record.getUbicacion() != null) {
-            sql.SET("ubicacion = #{record.ubicacion,jdbcType=VARCHAR}");
-        }
-        
-        if (record.getNombreSolicitante() != null) {
-            sql.SET("nombre_solicitante = #{record.nombreSolicitante,jdbcType=VARCHAR}");
-        }
-        
-        if (record.getTelefonoSolicitante() != null) {
-            sql.SET("telefono_solicitante = #{record.telefonoSolicitante,jdbcType=VARCHAR}");
-        }
-        
-        if (record.getEmailSolicitante() != null) {
-            sql.SET("email_solicitante = #{record.emailSolicitante,jdbcType=VARCHAR}");
-        }
-        
-        if (record.getEstadoReserva() != null) {
-            sql.SET("estado_reserva = #{record.estadoReserva,jdbcType=INTEGER}");
+        if (record.getIdServicioVehiculo() != null) {
+            sql.SET("id_servicio_vehiculo = #{record.idServicioVehiculo,jdbcType=BIGINT}");
         }
         
         if (record.getCantidad() != null) {
             sql.SET("cantidad = #{record.cantidad,jdbcType=INTEGER}");
         }
         
-        if (record.getTurno() != null) {
-            sql.SET("turno = #{record.turno,jdbcType=VARCHAR}");
+        if (record.getPreccio() != null) {
+            sql.SET("preccio = #{record.preccio,jdbcType=INTEGER}");
         }
         
-        if (record.getPrecio() != null) {
-            sql.SET("precio = #{record.precio,jdbcType=INTEGER}");
+        if (record.getIdReserva() != null) {
+            sql.SET("id_reserva = #{record.idReserva,jdbcType=BIGINT}");
         }
         
         applyWhere(sql, example, true);
@@ -146,70 +101,45 @@ public class ReservasSqlProvider {
 
     public String updateByExample(Map<String, Object> parameter) {
         SQL sql = new SQL();
-        sql.UPDATE("reservas");
+        sql.UPDATE("reservas_detalles");
         
-        sql.SET("id_reserva = #{record.idReserva,jdbcType=INTEGER}");
-        sql.SET("fecha = #{record.fecha,jdbcType=DATE}");
-        sql.SET("ubicacion = #{record.ubicacion,jdbcType=VARCHAR}");
-        sql.SET("nombre_solicitante = #{record.nombreSolicitante,jdbcType=VARCHAR}");
-        sql.SET("telefono_solicitante = #{record.telefonoSolicitante,jdbcType=VARCHAR}");
-        sql.SET("email_solicitante = #{record.emailSolicitante,jdbcType=VARCHAR}");
-        sql.SET("estado_reserva = #{record.estadoReserva,jdbcType=INTEGER}");
+        sql.SET("id_reserva_detalle = #{record.idReservaDetalle,jdbcType=INTEGER}");
+        sql.SET("id_servicio_vehiculo = #{record.idServicioVehiculo,jdbcType=BIGINT}");
         sql.SET("cantidad = #{record.cantidad,jdbcType=INTEGER}");
-        sql.SET("turno = #{record.turno,jdbcType=VARCHAR}");
-        sql.SET("precio = #{record.precio,jdbcType=INTEGER}");
+        sql.SET("preccio = #{record.preccio,jdbcType=INTEGER}");
+        sql.SET("id_reserva = #{record.idReserva,jdbcType=BIGINT}");
         
-        ReservasExample example = (ReservasExample) parameter.get("example");
+        ReservasDetallesExample example = (ReservasDetallesExample) parameter.get("example");
         applyWhere(sql, example, true);
         return sql.toString();
     }
 
-    public String updateByPrimaryKeySelective(Reservas record) {
+    public String updateByPrimaryKeySelective(ReservasDetalles record) {
         SQL sql = new SQL();
-        sql.UPDATE("reservas");
+        sql.UPDATE("reservas_detalles");
         
-        if (record.getFecha() != null) {
-            sql.SET("fecha = #{fecha,jdbcType=DATE}");
-        }
-        
-        if (record.getUbicacion() != null) {
-            sql.SET("ubicacion = #{ubicacion,jdbcType=VARCHAR}");
-        }
-        
-        if (record.getNombreSolicitante() != null) {
-            sql.SET("nombre_solicitante = #{nombreSolicitante,jdbcType=VARCHAR}");
-        }
-        
-        if (record.getTelefonoSolicitante() != null) {
-            sql.SET("telefono_solicitante = #{telefonoSolicitante,jdbcType=VARCHAR}");
-        }
-        
-        if (record.getEmailSolicitante() != null) {
-            sql.SET("email_solicitante = #{emailSolicitante,jdbcType=VARCHAR}");
-        }
-        
-        if (record.getEstadoReserva() != null) {
-            sql.SET("estado_reserva = #{estadoReserva,jdbcType=INTEGER}");
+        if (record.getIdServicioVehiculo() != null) {
+            sql.SET("id_servicio_vehiculo = #{idServicioVehiculo,jdbcType=BIGINT}");
         }
         
         if (record.getCantidad() != null) {
             sql.SET("cantidad = #{cantidad,jdbcType=INTEGER}");
         }
         
-        if (record.getTurno() != null) {
-            sql.SET("turno = #{turno,jdbcType=VARCHAR}");
+        if (record.getPreccio() != null) {
+            sql.SET("preccio = #{preccio,jdbcType=INTEGER}");
         }
         
-        if (record.getPrecio() != null) {
-            sql.SET("precio = #{precio,jdbcType=INTEGER}");
+        if (record.getIdReserva() != null) {
+            sql.SET("id_reserva = #{idReserva,jdbcType=BIGINT}");
         }
         
-        sql.WHERE("id_reserva = #{idReserva,jdbcType=INTEGER}");
+        sql.WHERE("id_reserva_detalle = #{idReservaDetalle,jdbcType=INTEGER}");
         
         return sql.toString();
     }
 
-    protected void applyWhere(SQL sql, ReservasExample example, boolean includeExamplePhrase) {
+    protected void applyWhere(SQL sql, ReservasDetallesExample example, boolean includeExamplePhrase) {
         if (example == null) {
             return;
         }

@@ -32,14 +32,16 @@ public interface ReservasMapper {
     int deleteByPrimaryKey(Integer idReserva);
 
     @Insert({
-        "insert into reservas (id_servicio_vehiculo, fecha_hora, ",
-        "ubicacion, nombre_solicitante, ",
-        "telefono_solicitante, email_solicitante, ",
-        "estado_reserva)",
-        "values (#{idServicioVehiculo,jdbcType=BIGINT}, #{fechaHora,jdbcType=TIMESTAMP}, ",
-        "#{ubicacion,jdbcType=VARCHAR}, #{nombreSolicitante,jdbcType=VARCHAR}, ",
-        "#{telefonoSolicitante,jdbcType=VARCHAR}, #{emailSolicitante,jdbcType=VARCHAR}, ",
-        "#{estadoReserva,jdbcType=INTEGER})"
+        "insert into reservas (fecha, ubicacion, ",
+        "nombre_solicitante, telefono_solicitante, ",
+        "email_solicitante, estado_reserva, ",
+        "cantidad, turno, ",
+        "precio)",
+        "values (#{fecha,jdbcType=DATE}, #{ubicacion,jdbcType=VARCHAR}, ",
+        "#{nombreSolicitante,jdbcType=VARCHAR}, #{telefonoSolicitante,jdbcType=VARCHAR}, ",
+        "#{emailSolicitante,jdbcType=VARCHAR}, #{estadoReserva,jdbcType=INTEGER}, ",
+        "#{cantidad,jdbcType=INTEGER}, #{turno,jdbcType=VARCHAR}, ",
+        "#{precio,jdbcType=INTEGER})"
     })
     @Options(useGeneratedKeys=true,keyProperty="idReserva")
     int insert(Reservas record);
@@ -51,45 +53,51 @@ public interface ReservasMapper {
     @SelectProvider(type=ReservasSqlProvider.class, method="selectByExample")
     @Results({
         @Result(column="id_reserva", property="idReserva", jdbcType=JdbcType.INTEGER, id=true),
-        @Result(column="id_servicio_vehiculo", property="idServicioVehiculo", jdbcType=JdbcType.BIGINT),
-        @Result(column="fecha_hora", property="fechaHora", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="fecha", property="fecha", jdbcType=JdbcType.DATE),
         @Result(column="ubicacion", property="ubicacion", jdbcType=JdbcType.VARCHAR),
         @Result(column="nombre_solicitante", property="nombreSolicitante", jdbcType=JdbcType.VARCHAR),
         @Result(column="telefono_solicitante", property="telefonoSolicitante", jdbcType=JdbcType.VARCHAR),
         @Result(column="email_solicitante", property="emailSolicitante", jdbcType=JdbcType.VARCHAR),
-        @Result(column="estado_reserva", property="estadoReserva", jdbcType=JdbcType.INTEGER)
+        @Result(column="estado_reserva", property="estadoReserva", jdbcType=JdbcType.INTEGER),
+        @Result(column="cantidad", property="cantidad", jdbcType=JdbcType.INTEGER),
+        @Result(column="turno", property="turno", jdbcType=JdbcType.VARCHAR),
+        @Result(column="precio", property="precio", jdbcType=JdbcType.INTEGER)
     })
     List<Reservas> selectByExampleWithRowbounds(ReservasExample example, RowBounds rowBounds);
 
     @SelectProvider(type=ReservasSqlProvider.class, method="selectByExample")
     @Results({
         @Result(column="id_reserva", property="idReserva", jdbcType=JdbcType.INTEGER, id=true),
-        @Result(column="id_servicio_vehiculo", property="idServicioVehiculo", jdbcType=JdbcType.BIGINT),
-        @Result(column="fecha_hora", property="fechaHora", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="fecha", property="fecha", jdbcType=JdbcType.DATE),
         @Result(column="ubicacion", property="ubicacion", jdbcType=JdbcType.VARCHAR),
         @Result(column="nombre_solicitante", property="nombreSolicitante", jdbcType=JdbcType.VARCHAR),
         @Result(column="telefono_solicitante", property="telefonoSolicitante", jdbcType=JdbcType.VARCHAR),
         @Result(column="email_solicitante", property="emailSolicitante", jdbcType=JdbcType.VARCHAR),
-        @Result(column="estado_reserva", property="estadoReserva", jdbcType=JdbcType.INTEGER)
+        @Result(column="estado_reserva", property="estadoReserva", jdbcType=JdbcType.INTEGER),
+        @Result(column="cantidad", property="cantidad", jdbcType=JdbcType.INTEGER),
+        @Result(column="turno", property="turno", jdbcType=JdbcType.VARCHAR),
+        @Result(column="precio", property="precio", jdbcType=JdbcType.INTEGER)
     })
     List<Reservas> selectByExample(ReservasExample example);
 
     @Select({
         "select",
-        "id_reserva, id_servicio_vehiculo, fecha_hora, ubicacion, nombre_solicitante, ",
-        "telefono_solicitante, email_solicitante, estado_reserva",
+        "id_reserva, fecha, ubicacion, nombre_solicitante, telefono_solicitante, email_solicitante, ",
+        "estado_reserva, cantidad, turno, precio",
         "from reservas",
         "where id_reserva = #{idReserva,jdbcType=INTEGER}"
     })
     @Results({
         @Result(column="id_reserva", property="idReserva", jdbcType=JdbcType.INTEGER, id=true),
-        @Result(column="id_servicio_vehiculo", property="idServicioVehiculo", jdbcType=JdbcType.BIGINT),
-        @Result(column="fecha_hora", property="fechaHora", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="fecha", property="fecha", jdbcType=JdbcType.DATE),
         @Result(column="ubicacion", property="ubicacion", jdbcType=JdbcType.VARCHAR),
         @Result(column="nombre_solicitante", property="nombreSolicitante", jdbcType=JdbcType.VARCHAR),
         @Result(column="telefono_solicitante", property="telefonoSolicitante", jdbcType=JdbcType.VARCHAR),
         @Result(column="email_solicitante", property="emailSolicitante", jdbcType=JdbcType.VARCHAR),
-        @Result(column="estado_reserva", property="estadoReserva", jdbcType=JdbcType.INTEGER)
+        @Result(column="estado_reserva", property="estadoReserva", jdbcType=JdbcType.INTEGER),
+        @Result(column="cantidad", property="cantidad", jdbcType=JdbcType.INTEGER),
+        @Result(column="turno", property="turno", jdbcType=JdbcType.VARCHAR),
+        @Result(column="precio", property="precio", jdbcType=JdbcType.INTEGER)
     })
     Reservas selectByPrimaryKey(Integer idReserva);
 
@@ -104,13 +112,15 @@ public interface ReservasMapper {
 
     @Update({
         "update reservas",
-        "set id_servicio_vehiculo = #{idServicioVehiculo,jdbcType=BIGINT},",
-          "fecha_hora = #{fechaHora,jdbcType=TIMESTAMP},",
+        "set fecha = #{fecha,jdbcType=DATE},",
           "ubicacion = #{ubicacion,jdbcType=VARCHAR},",
           "nombre_solicitante = #{nombreSolicitante,jdbcType=VARCHAR},",
           "telefono_solicitante = #{telefonoSolicitante,jdbcType=VARCHAR},",
           "email_solicitante = #{emailSolicitante,jdbcType=VARCHAR},",
-          "estado_reserva = #{estadoReserva,jdbcType=INTEGER}",
+          "estado_reserva = #{estadoReserva,jdbcType=INTEGER},",
+          "cantidad = #{cantidad,jdbcType=INTEGER},",
+          "turno = #{turno,jdbcType=VARCHAR},",
+          "precio = #{precio,jdbcType=INTEGER}",
         "where id_reserva = #{idReserva,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(Reservas record);

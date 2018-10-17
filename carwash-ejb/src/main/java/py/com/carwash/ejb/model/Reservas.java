@@ -6,9 +6,7 @@ import java.util.Date;
 public class Reservas implements Serializable {
     private Integer idReserva;
 
-    private Long idServicioVehiculo;
-
-    private Date fechaHora;
+    private Date fecha;
 
     private String ubicacion;
 
@@ -20,6 +18,12 @@ public class Reservas implements Serializable {
 
     private Integer estadoReserva;
 
+    private Integer cantidad;
+
+    private String turno;
+
+    private Integer precio;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getIdReserva() {
@@ -30,20 +34,12 @@ public class Reservas implements Serializable {
         this.idReserva = idReserva;
     }
 
-    public Long getIdServicioVehiculo() {
-        return idServicioVehiculo;
+    public Date getFecha() {
+        return fecha;
     }
 
-    public void setIdServicioVehiculo(Long idServicioVehiculo) {
-        this.idServicioVehiculo = idServicioVehiculo;
-    }
-
-    public Date getFechaHora() {
-        return fechaHora;
-    }
-
-    public void setFechaHora(Date fechaHora) {
-        this.fechaHora = fechaHora;
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
     public String getUbicacion() {
@@ -86,6 +82,30 @@ public class Reservas implements Serializable {
         this.estadoReserva = estadoReserva;
     }
 
+    public Integer getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public String getTurno() {
+        return turno;
+    }
+
+    public void setTurno(String turno) {
+        this.turno = turno;
+    }
+
+    public Integer getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Integer precio) {
+        this.precio = precio;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -93,13 +113,15 @@ public class Reservas implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", idReserva=").append(idReserva);
-        sb.append(", idServicioVehiculo=").append(idServicioVehiculo);
-        sb.append(", fechaHora=").append(fechaHora);
+        sb.append(", fecha=").append(fecha);
         sb.append(", ubicacion=").append(ubicacion);
         sb.append(", nombreSolicitante=").append(nombreSolicitante);
         sb.append(", telefonoSolicitante=").append(telefonoSolicitante);
         sb.append(", emailSolicitante=").append(emailSolicitante);
         sb.append(", estadoReserva=").append(estadoReserva);
+        sb.append(", cantidad=").append(cantidad);
+        sb.append(", turno=").append(turno);
+        sb.append(", precio=").append(precio);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

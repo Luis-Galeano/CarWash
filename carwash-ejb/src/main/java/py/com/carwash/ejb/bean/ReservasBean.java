@@ -8,7 +8,6 @@ package py.com.carwash.ejb.bean;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -21,12 +20,13 @@ import static py.com.carwash.ejb.Constantes.*;
 import py.com.carwash.ejb.Util.EmailBean;
 import py.com.carwash.ejb.dao.QueryDAO;
 import py.com.carwash.ejb.dao.ReservasDAO;
+import py.com.carwash.ejb.dao.ReservasDetallesDAO;
 import py.com.carwash.ejb.dao.ServiciosVehiculosDAO;
 import py.com.carwash.ejb.dto.GenericResponse;
 import py.com.carwash.ejb.model.Reservas;
+import py.com.carwash.ejb.model.ReservasDetalles;
 import py.com.carwash.ejb.model.ReservasExample;
-import py.com.carwash.ejb.model.ServiciosVehiculos;
-import py.com.carwash.ejb.model.ServiciosVehiculosExample;
+import py.com.carwash.ejb.model.ReservasRequest;
 
 /**
  *
@@ -40,39 +40,44 @@ public class ReservasBean {
     @Inject
     ReservasDAO reservaDao;
     @Inject
+    ReservasDetallesDAO reservaDetalleDao;
+    @Inject
     ServiciosVehiculosDAO svDao;
     @EJB
     EmailBean emailBean;
     
-    public GenericResponse registrarReserva(Reservas reserva){
-        logger.info("IN: {}",reserva);
+    public GenericResponse registrarReserva(ReservasRequest reservaRequest){
+        logger.info("IN: {}",reservaRequest);
         GenericResponse resp = new GenericResponse();
         GenericResponse resp1 = new GenericResponse();
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         try {
-            if (reserva != null){
+            if (reservaRequest != null){
                 logger.info("[INICIANDO REGISTRO DE RESERVA]");
-                reserva.setEstadoReserva(1); // estado pendiente
-                reservaDao.insertSelective(reserva); //se registra la reserva
                 
-                ServiciosVehiculosExample svExample = new ServiciosVehiculosExample();
-                svExample.createCriteria().andIdServicioVehiculoEqualTo(reserva.getIdServicioVehiculo().intValue());
-                ServiciosVehiculos serVehiculo = svDao.selectOneByExample(svExample);
-                Map<String,Object> data = queryDao.getVehiculoServicio(serVehiculo.getIdServicio().intValue(), serVehiculo.getIdVehiculo().intValue());
+                Reservas cabecera = reservaRequest.getCabecera();
+                cabecera.setEstadoReserva(1); // estado pendiente
+                //agregar reserva cabecera
+                reservaDao.insertSelective(cabecera); 
+                // agregar detalles de la reserva
+                for (ReservasDetalles d : reservaRequest.getDetalles()){
+                    d.setIdReserva(cabecera.getIdReserva().longValue());
+                    reservaDetalleDao.insertSelective(d);
+                }
+                
                 
                 // preparar datos para enviar correo al cliente
                 String asunto = "Reserva Carwash";
-                String mensaje = "<b>"+reserva.getNombreSolicitante()+"</b> ,<br><br>"+"Su reserva se ha registrado exitosamente. Gracias por su elección.<br><br>Saludos!";
-                String to = reserva.getEmailSolicitante();
+                String mensaje = "<b>"+cabecera.getNombreSolicitante()+"</b> ,<br><br>"+"Su reserva se ha registrado exitosamente. Gracias por su elección.<br><br>Saludos!";
+                String to = cabecera.getEmailSolicitante();
                 String fromAddress = queryDao.getConfigValue(FROM_ADDRESS);
                 emailBean.sendEmail(fromAddress, to, asunto, mensaje);
                 //preparar datos para enviar correo al admin
                 asunto = "Pedido de Reserva";
-                mensaje = "El cliente <b>"+reserva.getNombreSolicitante()+"</b> ha solicitado lo siguiente:<br><br>"+
-                        "<b>Tipo vehiculo: </b>"+data.get("vehiculo")+"<br>"+
-                        "<b>Tipo Servicio: </b>"+data.get("servicio")+"<br>"+
-                        "<b>Dia: </b>"+df.format(reserva.getFechaHora())+"<br><br>"+
-                        "El precio estimado del trabjo es: <b>"+serVehiculo.getPrecio()+"</b>";
+                mensaje = "Hay una nueva reserva solicitada por <b>"
+                        +cabecera.getNombreSolicitante()+".</b><br><br>Revise la pagina web para mas detalles<br></br><br></br>"+
+                        "Saludos";
+                        
                         
                 to = queryDao.getConfigValue(TO_ADDRESS);
                 emailBean.sendEmail(fromAddress, to, asunto, mensaje);
@@ -127,21 +132,25 @@ public class ReservasBean {
     		SimpleDateFormat df = new SimpleDateFormat("ddMMyyyy");
     		Date reserva = df.parse(fechaReserva);
     		ReservasExample rExample = new ReservasExample();
-    		rExample.createCriteria().andFechaHoraEqualTo(reserva);
+    		rExample.createCriteria().andFechaEqualTo(reserva);
     		List<Reservas> reservasList = reservaDao.selectByExample(rExample);
     		int maxReservaManhana = Integer.valueOf(queryDao.getConfigValue(MAX_RESERVA_MANHANA));
     		int maxReservaTarde = Integer.valueOf(queryDao.getConfigValue(MAX_RESERVA_TARDE));
     		int reservaManhana=0;
     		int reservaTarde=0;
     		String disponible="NO";
-    		for(Reservas r : reservasList){
-    			if (r.getUbicacion().equals("M")){
-    				reservaManhana = reservaManhana + r.getEstadoReserva();
+                
+                if (reservasList != null){
+                    for(Reservas r : reservasList){
+    			if (r.getTurno().equals("M")){
+    				reservaManhana = reservaManhana + r.getCantidad();
     			}
-    			else if (r.getUbicacion().equals("T")){
-    				reservaTarde = reservaTarde + r.getEstadoReserva();;
+    			else if (r.getTurno().equals("T")){
+    				reservaTarde = reservaTarde + r.getCantidad();;
     			}
-    		}
+                    }
+                }
+    		
     		if (reservaManhana < maxReservaManhana & reservaTarde < maxReservaTarde){
     			disponible = "MT";
     		}

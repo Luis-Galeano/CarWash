@@ -19,7 +19,7 @@ import org.apache.logging.log4j.Logger;
 
 import py.com.carwash.ejb.bean.ReservasBean;
 import py.com.carwash.ejb.dto.GenericResponse;
-import py.com.carwash.ejb.model.Reservas;
+import py.com.carwash.ejb.model.ReservasRequest;
 
 /**
  *
@@ -36,8 +36,8 @@ public class ReservasResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("registrar")
-    public GenericResponse getPrecioServicioPorVehiculo(Reservas reserva){
-        return reservaBean.registrarReserva(reserva);
+    public GenericResponse getPrecioServicioPorVehiculo(ReservasRequest reservaRequest){
+        return reservaBean.registrarReserva(reservaRequest);
     }
     
     @GET
@@ -51,5 +51,12 @@ public class ReservasResource {
     @Path("eliminar")
     public GenericResponse eliminarReserva(@QueryParam("idReserva") Integer idReserva){
         return reservaBean.eliminarReserva(idReserva);
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("verificar")
+    public GenericResponse verificarReserva(@QueryParam("fecha") String fecha){
+        return reservaBean.verificarDisponibilidad(fecha);
     }
 }
