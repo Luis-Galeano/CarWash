@@ -24,6 +24,10 @@ public class Reservas implements Serializable {
 
     private Integer precio;
 
+    private Date fechaSolicitud;
+
+    private String observaciones;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getIdReserva() {
@@ -106,6 +110,22 @@ public class Reservas implements Serializable {
         this.precio = precio;
     }
 
+    public Date getFechaSolicitud() {
+        return fechaSolicitud;
+    }
+
+    public void setFechaSolicitud(Date fechaSolicitud) {
+        this.fechaSolicitud = fechaSolicitud;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -122,6 +142,8 @@ public class Reservas implements Serializable {
         sb.append(", cantidad=").append(cantidad);
         sb.append(", turno=").append(turno);
         sb.append(", precio=").append(precio);
+        sb.append(", fechaSolicitud=").append(fechaSolicitud);
+        sb.append(", observaciones=").append(observaciones);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

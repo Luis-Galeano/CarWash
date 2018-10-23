@@ -64,6 +64,14 @@ public class ReservasSqlProvider {
             sql.VALUES("precio", "#{precio,jdbcType=INTEGER}");
         }
         
+        if (record.getFechaSolicitud() != null) {
+            sql.VALUES("fecha_solicitud", "#{fechaSolicitud,jdbcType=TIMESTAMP}");
+        }
+        
+        if (record.getObservaciones() != null) {
+            sql.VALUES("observaciones", "#{observaciones,jdbcType=VARCHAR}");
+        }
+        
         return sql.toString();
     }
 
@@ -83,6 +91,8 @@ public class ReservasSqlProvider {
         sql.SELECT("cantidad");
         sql.SELECT("turno");
         sql.SELECT("precio");
+        sql.SELECT("fecha_solicitud");
+        sql.SELECT("observaciones");
         sql.FROM("reservas");
         applyWhere(sql, example, false);
         
@@ -140,6 +150,14 @@ public class ReservasSqlProvider {
             sql.SET("precio = #{record.precio,jdbcType=INTEGER}");
         }
         
+        if (record.getFechaSolicitud() != null) {
+            sql.SET("fecha_solicitud = #{record.fechaSolicitud,jdbcType=TIMESTAMP}");
+        }
+        
+        if (record.getObservaciones() != null) {
+            sql.SET("observaciones = #{record.observaciones,jdbcType=VARCHAR}");
+        }
+        
         applyWhere(sql, example, true);
         return sql.toString();
     }
@@ -158,6 +176,8 @@ public class ReservasSqlProvider {
         sql.SET("cantidad = #{record.cantidad,jdbcType=INTEGER}");
         sql.SET("turno = #{record.turno,jdbcType=VARCHAR}");
         sql.SET("precio = #{record.precio,jdbcType=INTEGER}");
+        sql.SET("fecha_solicitud = #{record.fechaSolicitud,jdbcType=TIMESTAMP}");
+        sql.SET("observaciones = #{record.observaciones,jdbcType=VARCHAR}");
         
         ReservasExample example = (ReservasExample) parameter.get("example");
         applyWhere(sql, example, true);
@@ -202,6 +222,14 @@ public class ReservasSqlProvider {
         
         if (record.getPrecio() != null) {
             sql.SET("precio = #{precio,jdbcType=INTEGER}");
+        }
+        
+        if (record.getFechaSolicitud() != null) {
+            sql.SET("fecha_solicitud = #{fechaSolicitud,jdbcType=TIMESTAMP}");
+        }
+        
+        if (record.getObservaciones() != null) {
+            sql.SET("observaciones = #{observaciones,jdbcType=VARCHAR}");
         }
         
         sql.WHERE("id_reserva = #{idReserva,jdbcType=INTEGER}");

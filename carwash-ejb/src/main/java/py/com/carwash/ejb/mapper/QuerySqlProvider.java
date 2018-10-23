@@ -5,6 +5,7 @@
  */
 package py.com.carwash.ejb.mapper;
 
+import java.util.Date;
 import java.util.Map;
 
 
@@ -25,12 +26,66 @@ public class QuerySqlProvider {
     
     public String getVehiculoServicio(){
         
-        String sql = "select (select descripcion from servicios\n" +
+        String sql = "select (select nombre from servicios\n" +
                      "where id_Servicio=#{idServicio}) as servicio,\n" +
                      "(select nombre from vehiculos\n" +
                      "where id_vehiculo = #{idVehiculo}) as vehiculo";            
         return sql;
     }
+    
+    public String getReservas(Map<String, Object> parameters){
+        
+        Date fecha = (Date)parameters.get("fecha");
+        String nombre = (String)parameters.get("nombre");
+        String turno = (String)parameters.get("turno");
+        String telefono = (String)parameters.get("telefono");
+        
+        String sql = "select * from reservas\n" +
+                     "where true\n";
+        if (fecha != null){
+            sql= sql+"and fecha = #{fecha}\n";
+        }
+        if(nombre != null){
+            sql= sql+"and nombre_solicitante = #{nombre}\n";
+        }  
+        if(turno != null){
+            sql= sql+"and turno = #{turno}\n";
+        }
+        if(telefono != null){
+            sql= sql+"and telefono_solicitante = #{telefono}\n";
+        }
+        sql=sql+ "LIMIT #{limit}\n"
+               + "OFFSET #{offset}";
+        
+        return sql;
+    }
+    
+    public String getReservasCount(Map<String, Object> parameters){
+        
+        Date fecha = (Date)parameters.get("fecha");
+        String nombre = (String)parameters.get("nombre");
+        String turno = (String)parameters.get("turno");
+        String telefono = (String)parameters.get("telefono");
+        
+        String sql = "select count(*) from reservas\n" +
+                     "where true\n";
+        if (fecha != null){
+            sql= sql+"and fecha = #{fecha}\n";
+        }
+        if(nombre != null){
+            sql= sql+"and nombre_solicitante = #{nombre}\n";
+        }  
+        if(turno != null){
+            sql= sql+"and turno = #{turno}\n";
+        }
+        if(telefono != null){
+            sql= sql+"and telefono_solicitante = #{telefono}\n";
+        }
+        
+        return sql;
+    }
+    
+    
     
     
 }

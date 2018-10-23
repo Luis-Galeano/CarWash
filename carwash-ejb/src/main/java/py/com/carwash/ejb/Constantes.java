@@ -40,4 +40,8 @@ public class Constantes {
     
     public static final String MAX_RESERVA_MANHANA= "max-reserva-manhana";
     public static final String MAX_RESERVA_TARDE= "max-reserva-tarde";
+    public static final String MAX_RESERVA_NOCHE= "max-reserva-noche";
+    
+    public static final Integer DEFAULT_PAGE = 1;
+    public static final Integer DEFAULT_COUNT=10;
 }

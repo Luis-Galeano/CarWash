@@ -36,12 +36,14 @@ public interface ReservasMapper {
         "nombre_solicitante, telefono_solicitante, ",
         "email_solicitante, estado_reserva, ",
         "cantidad, turno, ",
-        "precio)",
+        "precio, fecha_solicitud, ",
+        "observaciones)",
         "values (#{fecha,jdbcType=DATE}, #{ubicacion,jdbcType=VARCHAR}, ",
         "#{nombreSolicitante,jdbcType=VARCHAR}, #{telefonoSolicitante,jdbcType=VARCHAR}, ",
         "#{emailSolicitante,jdbcType=VARCHAR}, #{estadoReserva,jdbcType=INTEGER}, ",
         "#{cantidad,jdbcType=INTEGER}, #{turno,jdbcType=VARCHAR}, ",
-        "#{precio,jdbcType=INTEGER})"
+        "#{precio,jdbcType=INTEGER}, #{fechaSolicitud,jdbcType=TIMESTAMP}, ",
+        "#{observaciones,jdbcType=VARCHAR})"
     })
     @Options(useGeneratedKeys=true,keyProperty="idReserva")
     int insert(Reservas record);
@@ -61,7 +63,9 @@ public interface ReservasMapper {
         @Result(column="estado_reserva", property="estadoReserva", jdbcType=JdbcType.INTEGER),
         @Result(column="cantidad", property="cantidad", jdbcType=JdbcType.INTEGER),
         @Result(column="turno", property="turno", jdbcType=JdbcType.VARCHAR),
-        @Result(column="precio", property="precio", jdbcType=JdbcType.INTEGER)
+        @Result(column="precio", property="precio", jdbcType=JdbcType.INTEGER),
+        @Result(column="fecha_solicitud", property="fechaSolicitud", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="observaciones", property="observaciones", jdbcType=JdbcType.VARCHAR)
     })
     List<Reservas> selectByExampleWithRowbounds(ReservasExample example, RowBounds rowBounds);
 
@@ -76,14 +80,16 @@ public interface ReservasMapper {
         @Result(column="estado_reserva", property="estadoReserva", jdbcType=JdbcType.INTEGER),
         @Result(column="cantidad", property="cantidad", jdbcType=JdbcType.INTEGER),
         @Result(column="turno", property="turno", jdbcType=JdbcType.VARCHAR),
-        @Result(column="precio", property="precio", jdbcType=JdbcType.INTEGER)
+        @Result(column="precio", property="precio", jdbcType=JdbcType.INTEGER),
+        @Result(column="fecha_solicitud", property="fechaSolicitud", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="observaciones", property="observaciones", jdbcType=JdbcType.VARCHAR)
     })
     List<Reservas> selectByExample(ReservasExample example);
 
     @Select({
         "select",
         "id_reserva, fecha, ubicacion, nombre_solicitante, telefono_solicitante, email_solicitante, ",
-        "estado_reserva, cantidad, turno, precio",
+        "estado_reserva, cantidad, turno, precio, fecha_solicitud, observaciones",
         "from reservas",
         "where id_reserva = #{idReserva,jdbcType=INTEGER}"
     })
@@ -97,7 +103,9 @@ public interface ReservasMapper {
         @Result(column="estado_reserva", property="estadoReserva", jdbcType=JdbcType.INTEGER),
         @Result(column="cantidad", property="cantidad", jdbcType=JdbcType.INTEGER),
         @Result(column="turno", property="turno", jdbcType=JdbcType.VARCHAR),
-        @Result(column="precio", property="precio", jdbcType=JdbcType.INTEGER)
+        @Result(column="precio", property="precio", jdbcType=JdbcType.INTEGER),
+        @Result(column="fecha_solicitud", property="fechaSolicitud", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="observaciones", property="observaciones", jdbcType=JdbcType.VARCHAR)
     })
     Reservas selectByPrimaryKey(Integer idReserva);
 
@@ -120,7 +128,9 @@ public interface ReservasMapper {
           "estado_reserva = #{estadoReserva,jdbcType=INTEGER},",
           "cantidad = #{cantidad,jdbcType=INTEGER},",
           "turno = #{turno,jdbcType=VARCHAR},",
-          "precio = #{precio,jdbcType=INTEGER}",
+          "precio = #{precio,jdbcType=INTEGER},",
+          "fecha_solicitud = #{fechaSolicitud,jdbcType=TIMESTAMP},",
+          "observaciones = #{observaciones,jdbcType=VARCHAR}",
         "where id_reserva = #{idReserva,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(Reservas record);

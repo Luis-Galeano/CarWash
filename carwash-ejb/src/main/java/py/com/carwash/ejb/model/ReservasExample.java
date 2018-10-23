@@ -781,6 +781,136 @@ public class ReservasExample {
             addCriterion("precio not between", value1, value2, "precio");
             return (Criteria) this;
         }
+
+        public Criteria andFechaSolicitudIsNull() {
+            addCriterion("fecha_solicitud is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFechaSolicitudIsNotNull() {
+            addCriterion("fecha_solicitud is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFechaSolicitudEqualTo(Date value) {
+            addCriterion("fecha_solicitud =", value, "fechaSolicitud");
+            return (Criteria) this;
+        }
+
+        public Criteria andFechaSolicitudNotEqualTo(Date value) {
+            addCriterion("fecha_solicitud <>", value, "fechaSolicitud");
+            return (Criteria) this;
+        }
+
+        public Criteria andFechaSolicitudGreaterThan(Date value) {
+            addCriterion("fecha_solicitud >", value, "fechaSolicitud");
+            return (Criteria) this;
+        }
+
+        public Criteria andFechaSolicitudGreaterThanOrEqualTo(Date value) {
+            addCriterion("fecha_solicitud >=", value, "fechaSolicitud");
+            return (Criteria) this;
+        }
+
+        public Criteria andFechaSolicitudLessThan(Date value) {
+            addCriterion("fecha_solicitud <", value, "fechaSolicitud");
+            return (Criteria) this;
+        }
+
+        public Criteria andFechaSolicitudLessThanOrEqualTo(Date value) {
+            addCriterion("fecha_solicitud <=", value, "fechaSolicitud");
+            return (Criteria) this;
+        }
+
+        public Criteria andFechaSolicitudIn(List<Date> values) {
+            addCriterion("fecha_solicitud in", values, "fechaSolicitud");
+            return (Criteria) this;
+        }
+
+        public Criteria andFechaSolicitudNotIn(List<Date> values) {
+            addCriterion("fecha_solicitud not in", values, "fechaSolicitud");
+            return (Criteria) this;
+        }
+
+        public Criteria andFechaSolicitudBetween(Date value1, Date value2) {
+            addCriterion("fecha_solicitud between", value1, value2, "fechaSolicitud");
+            return (Criteria) this;
+        }
+
+        public Criteria andFechaSolicitudNotBetween(Date value1, Date value2) {
+            addCriterion("fecha_solicitud not between", value1, value2, "fechaSolicitud");
+            return (Criteria) this;
+        }
+
+        public Criteria andObservacionesIsNull() {
+            addCriterion("observaciones is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andObservacionesIsNotNull() {
+            addCriterion("observaciones is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andObservacionesEqualTo(String value) {
+            addCriterion("observaciones =", value, "observaciones");
+            return (Criteria) this;
+        }
+
+        public Criteria andObservacionesNotEqualTo(String value) {
+            addCriterion("observaciones <>", value, "observaciones");
+            return (Criteria) this;
+        }
+
+        public Criteria andObservacionesGreaterThan(String value) {
+            addCriterion("observaciones >", value, "observaciones");
+            return (Criteria) this;
+        }
+
+        public Criteria andObservacionesGreaterThanOrEqualTo(String value) {
+            addCriterion("observaciones >=", value, "observaciones");
+            return (Criteria) this;
+        }
+
+        public Criteria andObservacionesLessThan(String value) {
+            addCriterion("observaciones <", value, "observaciones");
+            return (Criteria) this;
+        }
+
+        public Criteria andObservacionesLessThanOrEqualTo(String value) {
+            addCriterion("observaciones <=", value, "observaciones");
+            return (Criteria) this;
+        }
+
+        public Criteria andObservacionesLike(String value) {
+            addCriterion("observaciones like", value, "observaciones");
+            return (Criteria) this;
+        }
+
+        public Criteria andObservacionesNotLike(String value) {
+            addCriterion("observaciones not like", value, "observaciones");
+            return (Criteria) this;
+        }
+
+        public Criteria andObservacionesIn(List<String> values) {
+            addCriterion("observaciones in", values, "observaciones");
+            return (Criteria) this;
+        }
+
+        public Criteria andObservacionesNotIn(List<String> values) {
+            addCriterion("observaciones not in", values, "observaciones");
+            return (Criteria) this;
+        }
+
+        public Criteria andObservacionesBetween(String value1, String value2) {
+            addCriterion("observaciones between", value1, value2, "observaciones");
+            return (Criteria) this;
+        }
+
+        public Criteria andObservacionesNotBetween(String value1, String value2) {
+            addCriterion("observaciones not between", value1, value2, "observaciones");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
