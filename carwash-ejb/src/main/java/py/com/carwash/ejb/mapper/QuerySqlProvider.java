@@ -46,7 +46,7 @@ public class QuerySqlProvider {
             sql= sql+"and fecha = #{fecha}\n";
         }
         if(nombre != null){
-            sql= sql+"and nombre_solicitante = #{nombre}\n";
+            sql= sql+"and LOWER(nombre_solicitante) like LOWER('%"+nombre+"%')\n";
         }  
         if(turno != null){
             sql= sql+"and turno = #{turno}\n";
@@ -73,15 +73,15 @@ public class QuerySqlProvider {
             sql= sql+"and fecha = #{fecha}\n";
         }
         if(nombre != null){
-            sql= sql+"and nombre_solicitante = #{nombre}\n";
-        }  
+            sql= sql+"and LOWER(nombre_solicitante) like LOWER('%"+nombre+"%')\n";
+        }   
         if(turno != null){
             sql= sql+"and turno = #{turno}\n";
         }
         if(telefono != null){
             sql= sql+"and telefono_solicitante = #{telefono}\n";
         }
-        
+        sql = sql+"ORDER BY fecha ASC";
         return sql;
     }
     

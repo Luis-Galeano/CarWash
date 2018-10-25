@@ -98,7 +98,7 @@ public class ReservasBean {
                 
                 // preparar datos para enviar correo al cliente
                 String asunto = "Reserva Carwash";
-                String mensaje = "<b>Estimado cliente</b> ,<br><br>Su reserva se ha registrado exitosamente. Estos son los detalles de su reserva:<br><br>"
+                String mensaje = "<b>Estimado "+cabecera.getNombreSolicitante()+"</b> ,<br><br>Gracias por utilizar el servicio <a href='http://104.248.177.248'> Carwash Guillen</a>. Estos son los detalles de su reserva:<br><br>"
                         +detalle+"<br><br>Saludos Cordiales.";
                 String to = cabecera.getEmailSolicitante();
                 String fromAddress = queryDao.getConfigValue(FROM_ADDRESS);
