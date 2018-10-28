@@ -34,12 +34,9 @@ import py.com.carwash.ejb.model.ReservasDetalles;
 import py.com.carwash.ejb.model.ReservasDetallesExample;
 import py.com.carwash.ejb.model.ReservasExample;
 import py.com.carwash.ejb.model.ReservasRequest;
-import py.com.carwash.ejb.model.Servicios;
-import py.com.carwash.ejb.model.ServiciosExample;
 import py.com.carwash.ejb.model.ServiciosVehiculos;
 import py.com.carwash.ejb.model.ServiciosVehiculosExample;
-import py.com.carwash.ejb.model.Vehiculos;
-import py.com.carwash.ejb.model.VehiculosExample;
+
 
 /**
  *
@@ -74,12 +71,19 @@ public class ReservasBean {
                 logger.info("[INICIANDO REGISTRO DE RESERVA]");
                 
                 Reservas cabecera = reservaRequest.getCabecera();
+                if(cabecera.getUbicacion() == null || cabecera.getEmailSolicitante() == null || cabecera.getTurno() == null || reservaRequest.getDetalles() == null){
+                    logger.info("Completar campos obligatorios");
+                    resp.setEstado(ESTADO_ERROR);
+                    resp.setMensaje("Internal server error");
+                    return resp;
+                }
                 cabecera.setEstadoReserva(1); // estado pendiente
                 cabecera.setFechaSolicitud(Calendar.getInstance().getTime());
                 //agregar reserva cabecera
                 reservaDao.insertSelective(cabecera); 
                 // agregar detalles de la reserva
                 String detalle="";
+      
                 for (ReservasDetalles d : reservaRequest.getDetalles()){
                     d.setIdReserva(cabecera.getIdReserva().longValue());
                     ServiciosVehiculosExample svexample = new ServiciosVehiculosExample();
@@ -233,10 +237,13 @@ public class ReservasBean {
         return resp;
     }
     
-    public GenericResponse obtenerDetallesReserva(long idReserva){
+    public GenericResponse obtenerDetallesReserva(Long idReserva){
         logger.info("IN : {}",idReserva);
         GenericResponse resp = new GenericResponse();
         try {
+            ReservasExample rexample = new ReservasExample();
+            rexample.createCriteria().andIdReservaEqualTo(idReserva.intValue());
+            Reservas reserva = reservaDao.selectOneByExample(rexample);
             ReservasDetallesExample dexample = new ReservasDetallesExample();
             dexample.createCriteria().andIdReservaEqualTo(idReserva);
             List<ReservasDetalles> detalles = reservaDetalleDao.selectByExample(dexample);
@@ -254,8 +261,11 @@ public class ReservasBean {
                 det.put("vehiculo", mapDetalle.get("vehiculo"));
                 det.put("cantidad",detalle.getCantidad());
                 det.put("precio",detalle.getPreccio());
+                det.put("observacion",reserva.getObservaciones());
+                det.put("email",reserva.getEmailSolicitante());
                 data.add(det);
             }
+            
             resp.setDato(data);
             resp.setEstado(ESTADO_EXITO);
             resp.setMensaje(MENSAJE_EXITO);

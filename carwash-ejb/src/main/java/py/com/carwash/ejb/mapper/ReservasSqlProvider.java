@@ -29,7 +29,7 @@ public class ReservasSqlProvider {
         sql.INSERT_INTO("reservas");
         
         if (record.getFecha() != null) {
-            sql.VALUES("fecha", "#{fecha,jdbcType=DATE}");
+            sql.VALUES("fecha", "#{fecha,jdbcType=TIMESTAMP}");
         }
         
         if (record.getUbicacion() != null) {
@@ -115,7 +115,7 @@ public class ReservasSqlProvider {
         }
         
         if (record.getFecha() != null) {
-            sql.SET("fecha = #{record.fecha,jdbcType=DATE}");
+            sql.SET("fecha = #{record.fecha,jdbcType=TIMESTAMP}");
         }
         
         if (record.getUbicacion() != null) {
@@ -167,7 +167,7 @@ public class ReservasSqlProvider {
         sql.UPDATE("reservas");
         
         sql.SET("id_reserva = #{record.idReserva,jdbcType=INTEGER}");
-        sql.SET("fecha = #{record.fecha,jdbcType=DATE}");
+        sql.SET("fecha = #{record.fecha,jdbcType=TIMESTAMP}");
         sql.SET("ubicacion = #{record.ubicacion,jdbcType=VARCHAR}");
         sql.SET("nombre_solicitante = #{record.nombreSolicitante,jdbcType=VARCHAR}");
         sql.SET("telefono_solicitante = #{record.telefonoSolicitante,jdbcType=VARCHAR}");
@@ -189,7 +189,7 @@ public class ReservasSqlProvider {
         sql.UPDATE("reservas");
         
         if (record.getFecha() != null) {
-            sql.SET("fecha = #{fecha,jdbcType=DATE}");
+            sql.SET("fecha = #{fecha,jdbcType=TIMESTAMP}");
         }
         
         if (record.getUbicacion() != null) {

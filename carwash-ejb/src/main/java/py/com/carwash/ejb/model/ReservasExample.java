@@ -2,7 +2,6 @@ package py.com.carwash.ejb.model;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 public class ReservasExample {
@@ -106,32 +105,6 @@ public class ReservasExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
-            if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value.getTime()), property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
-            if (values == null || values.size() == 0) {
-                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
-            }
-            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
-            Iterator<Date> iter = values.iterator();
-            while (iter.hasNext()) {
-                dateList.add(new java.sql.Date(iter.next().getTime()));
-            }
-            addCriterion(condition, dateList, property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
-            if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
-        }
-
         public Criteria andIdReservaIsNull() {
             addCriterion("id_reserva is null");
             return (Criteria) this;
@@ -203,52 +176,52 @@ public class ReservasExample {
         }
 
         public Criteria andFechaEqualTo(Date value) {
-            addCriterionForJDBCDate("fecha =", value, "fecha");
+            addCriterion("fecha =", value, "fecha");
             return (Criteria) this;
         }
 
         public Criteria andFechaNotEqualTo(Date value) {
-            addCriterionForJDBCDate("fecha <>", value, "fecha");
+            addCriterion("fecha <>", value, "fecha");
             return (Criteria) this;
         }
 
         public Criteria andFechaGreaterThan(Date value) {
-            addCriterionForJDBCDate("fecha >", value, "fecha");
+            addCriterion("fecha >", value, "fecha");
             return (Criteria) this;
         }
 
         public Criteria andFechaGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("fecha >=", value, "fecha");
+            addCriterion("fecha >=", value, "fecha");
             return (Criteria) this;
         }
 
         public Criteria andFechaLessThan(Date value) {
-            addCriterionForJDBCDate("fecha <", value, "fecha");
+            addCriterion("fecha <", value, "fecha");
             return (Criteria) this;
         }
 
         public Criteria andFechaLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("fecha <=", value, "fecha");
+            addCriterion("fecha <=", value, "fecha");
             return (Criteria) this;
         }
 
         public Criteria andFechaIn(List<Date> values) {
-            addCriterionForJDBCDate("fecha in", values, "fecha");
+            addCriterion("fecha in", values, "fecha");
             return (Criteria) this;
         }
 
         public Criteria andFechaNotIn(List<Date> values) {
-            addCriterionForJDBCDate("fecha not in", values, "fecha");
+            addCriterion("fecha not in", values, "fecha");
             return (Criteria) this;
         }
 
         public Criteria andFechaBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("fecha between", value1, value2, "fecha");
+            addCriterion("fecha between", value1, value2, "fecha");
             return (Criteria) this;
         }
 
         public Criteria andFechaNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("fecha not between", value1, value2, "fecha");
+            addCriterion("fecha not between", value1, value2, "fecha");
             return (Criteria) this;
         }
 

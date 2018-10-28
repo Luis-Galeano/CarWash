@@ -38,7 +38,7 @@ public interface ReservasMapper {
         "cantidad, turno, ",
         "precio, fecha_solicitud, ",
         "observaciones)",
-        "values (#{fecha,jdbcType=DATE}, #{ubicacion,jdbcType=VARCHAR}, ",
+        "values (#{fecha,jdbcType=TIMESTAMP}, #{ubicacion,jdbcType=VARCHAR}, ",
         "#{nombreSolicitante,jdbcType=VARCHAR}, #{telefonoSolicitante,jdbcType=VARCHAR}, ",
         "#{emailSolicitante,jdbcType=VARCHAR}, #{estadoReserva,jdbcType=INTEGER}, ",
         "#{cantidad,jdbcType=INTEGER}, #{turno,jdbcType=VARCHAR}, ",
@@ -55,7 +55,7 @@ public interface ReservasMapper {
     @SelectProvider(type=ReservasSqlProvider.class, method="selectByExample")
     @Results({
         @Result(column="id_reserva", property="idReserva", jdbcType=JdbcType.INTEGER, id=true),
-        @Result(column="fecha", property="fecha", jdbcType=JdbcType.DATE),
+        @Result(column="fecha", property="fecha", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="ubicacion", property="ubicacion", jdbcType=JdbcType.VARCHAR),
         @Result(column="nombre_solicitante", property="nombreSolicitante", jdbcType=JdbcType.VARCHAR),
         @Result(column="telefono_solicitante", property="telefonoSolicitante", jdbcType=JdbcType.VARCHAR),
@@ -72,7 +72,7 @@ public interface ReservasMapper {
     @SelectProvider(type=ReservasSqlProvider.class, method="selectByExample")
     @Results({
         @Result(column="id_reserva", property="idReserva", jdbcType=JdbcType.INTEGER, id=true),
-        @Result(column="fecha", property="fecha", jdbcType=JdbcType.DATE),
+        @Result(column="fecha", property="fecha", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="ubicacion", property="ubicacion", jdbcType=JdbcType.VARCHAR),
         @Result(column="nombre_solicitante", property="nombreSolicitante", jdbcType=JdbcType.VARCHAR),
         @Result(column="telefono_solicitante", property="telefonoSolicitante", jdbcType=JdbcType.VARCHAR),
@@ -95,7 +95,7 @@ public interface ReservasMapper {
     })
     @Results({
         @Result(column="id_reserva", property="idReserva", jdbcType=JdbcType.INTEGER, id=true),
-        @Result(column="fecha", property="fecha", jdbcType=JdbcType.DATE),
+        @Result(column="fecha", property="fecha", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="ubicacion", property="ubicacion", jdbcType=JdbcType.VARCHAR),
         @Result(column="nombre_solicitante", property="nombreSolicitante", jdbcType=JdbcType.VARCHAR),
         @Result(column="telefono_solicitante", property="telefonoSolicitante", jdbcType=JdbcType.VARCHAR),
@@ -120,7 +120,7 @@ public interface ReservasMapper {
 
     @Update({
         "update reservas",
-        "set fecha = #{fecha,jdbcType=DATE},",
+        "set fecha = #{fecha,jdbcType=TIMESTAMP},",
           "ubicacion = #{ubicacion,jdbcType=VARCHAR},",
           "nombre_solicitante = #{nombreSolicitante,jdbcType=VARCHAR},",
           "telefono_solicitante = #{telefonoSolicitante,jdbcType=VARCHAR},",

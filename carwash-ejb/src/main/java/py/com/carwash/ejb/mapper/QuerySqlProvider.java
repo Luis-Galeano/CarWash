@@ -54,9 +54,10 @@ public class QuerySqlProvider {
         if(telefono != null){
             sql= sql+"and telefono_solicitante = #{telefono}\n";
         }
+        sql = sql+"ORDER BY fecha ASC\n";
         sql=sql+ "LIMIT #{limit}\n"
-               + "OFFSET #{offset}";
-        
+               + "OFFSET #{offset}\n";
+       
         return sql;
     }
     
@@ -81,7 +82,6 @@ public class QuerySqlProvider {
         if(telefono != null){
             sql= sql+"and telefono_solicitante = #{telefono}\n";
         }
-        sql = sql+"ORDER BY fecha ASC";
         return sql;
     }
     
