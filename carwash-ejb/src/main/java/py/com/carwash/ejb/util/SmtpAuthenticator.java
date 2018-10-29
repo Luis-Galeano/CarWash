@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package py.com.carwash.ejb.Util;
+package py.com.carwash.ejb.util;
 
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;

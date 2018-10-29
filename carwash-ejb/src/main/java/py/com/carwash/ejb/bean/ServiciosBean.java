@@ -15,7 +15,7 @@ import static py.com.carwash.ejb.Constantes.ESTADO_ERROR;
 import static py.com.carwash.ejb.Constantes.ESTADO_EXITO;
 import static py.com.carwash.ejb.Constantes.MENSAJE_ERROR;
 import static py.com.carwash.ejb.Constantes.MENSAJE_EXITO;
-import py.com.carwash.ejb.Util.EmailBean;
+import py.com.carwash.ejb.util.EmailBean;
 import py.com.carwash.ejb.dao.ServiciosDAO;
 import py.com.carwash.ejb.dao.ServiciosVehiculosDAO;
 import py.com.carwash.ejb.dto.GenericResponse;

@@ -21,7 +21,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import static py.com.carwash.ejb.Constantes.*;
-import py.com.carwash.ejb.Util.EmailBean;
+import py.com.carwash.ejb.util.EmailBean;
 import py.com.carwash.ejb.dao.QueryDAO;
 import py.com.carwash.ejb.dao.ReservasDAO;
 import py.com.carwash.ejb.dao.ReservasDetallesDAO;

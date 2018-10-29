@@ -16,7 +16,7 @@ public class Constantes {
     public static final Long ESTADO_ERROR = -1l;
     public static final String MENSAJE_ERROR = "Ha ocurrido un error, intentelo nuevamente";
     
-    public static final String KEYCLOAK_REALM = "keyclaok_realm_sigo";
+    public static final String KEYCLOAK_REALM = "keyclaok_realm";
     public static final String KEYCLOAK_ADMIN_URL = "keyclaok_admin_url";
     public static final String KEYCLOAK_TOKEN_URL = "keycloak_token_url";
     public static final String KEYCLOAK_TOKEN_BODY = "keycloak_token_body";
